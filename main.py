@@ -37,8 +37,18 @@ def get_employees():
 @app.route('/api/v1/employees', methods=['POST'])
 def add_employee():
     employee = request.get_json()
-    employee.append(employee)
+    firstName = employee['firstName']
+    lastName = employee['lastName']
+    emailId = employee['emailId']
+
+    # Exécuter une requête INSERT pour ajouter l'employé dans la base de données
+    sql = "INSERT INTO employees (firstName, lastName, emailId) VALUES (%s, %s, %s)"
+    values = (firstName, lastName, emailId)
+    cursor.execute(sql, values)
+    conn.commit()
+
     return jsonify({"message": "Employee added successfully."}), 201
+
 
 @app.route('/api/v1/employees/<int:employee_id>', methods=['PUT'])
 def update_employee(employee_id):
