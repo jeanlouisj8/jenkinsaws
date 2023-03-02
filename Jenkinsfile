@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'python -m unittest discover -v'
+                sh 'pip install -r requirements.txt'
+                sh 'pytest tests.py'
             }
         }
     }
